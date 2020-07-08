@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/")
     public String info() {
-        String baseURL = baseProperties.getTitle();
+        String baseURL = baseProperties.getSettings().getBaseURL();
         return baseURL;
     }
 
