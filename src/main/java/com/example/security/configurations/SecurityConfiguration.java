@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 /**
  * @program: security
@@ -35,11 +34,11 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
         HttpSecurity.formLogin()
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)
-                //.loginPage("/authentication/login")
+                .loginPage("/authentication/login")
                 .loginProcessingUrl("/authentication/form")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/login","/login.html").permitAll()
+                .antMatchers("/authentication/login","/login.html","/code/image").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
