@@ -16,5 +16,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class BaseProperties {
     private Settings settings = new Settings();
-    private String title;
+    private String title ="abc";
+    private String keywords="kkkk";
 }
