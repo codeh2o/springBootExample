@@ -35,4 +35,6 @@ site:
   meta: this is a meta
   title: ${site.meta}
   keywords: this is a keywords
+  settings:
+    baseURL: http://www.baidu.coms
 

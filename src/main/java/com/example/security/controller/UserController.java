@@ -19,8 +19,8 @@ public class UserController {
 
     @GetMapping("/")
     public String info() {
-        String baseURL = baseProperties.getKeywords();
-        return baseURL;
+     String baseURL = baseProperties.getKeywords();
+     return baseURL;
     }
 
 
