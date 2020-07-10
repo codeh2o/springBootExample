@@ -1,5 +1,6 @@
 package com.example.security.configurations;
 
+import com.example.security.filter.ValidateCodeFilter;
 import com.example.security.handler.AuthFailureHandler;
 import com.example.security.handler.AuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @program: security
@@ -24,6 +26,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthFailureHandler authFailureHandler;
 
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -31,14 +35,17 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity HttpSecurity) throws Exception {
-        HttpSecurity.formLogin()
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+
+        HttpSecurity.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin()
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)
                 .loginPage("/authentication/login")
                 .loginProcessingUrl("/authentication/form")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/login","/login.html","/code/image").permitAll()
+                .antMatchers("/authentication/login","/login.html","/code/image","/authentication/form").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
