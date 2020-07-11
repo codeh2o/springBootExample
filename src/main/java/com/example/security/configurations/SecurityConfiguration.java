@@ -36,12 +36,15 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity HttpSecurity) throws Exception {
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+        validateCodeFilter.setAuthenticationFailureHandler(authFailureHandler);
+
+        validateCodeFilter.afterPropertiesSet();
 
         HttpSecurity.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)
-                .loginPage("/authentication/login")
+                .loginPage("/login.html")
                 .loginProcessingUrl("/authentication/form")
                 .and()
                 .authorizeRequests()
