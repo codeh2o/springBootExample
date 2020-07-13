@@ -1,6 +1,9 @@
 package com.example.security.controller;
 
 import com.example.security.POJO.ImageCode;
+import com.example.security.configurations.ProjectProperties;
+import com.example.security.configurations.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -21,6 +24,9 @@ import java.util.Random;
  **/
 @Controller
 public class ValidateCodeController {
+    @Autowired
+    private ProjectProperties projectProperties;
+
     public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
 
     //private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
@@ -35,7 +41,7 @@ public class ValidateCodeController {
     }
 
     private ImageCode generate() {
-        int width = 67;
+        int width = projectProperties.ge;
         int height = 23;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 

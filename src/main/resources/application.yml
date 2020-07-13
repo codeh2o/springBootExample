@@ -36,3 +36,8 @@ site:
   title: ${site.meta}
   keywords: this is a keywords
 
+captcha:
+  width: 100
+  height: 50
+
+
