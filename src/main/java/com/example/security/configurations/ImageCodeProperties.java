@@ -12,9 +12,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  **/
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "security")
-public class SecurityProperties {
+public class ImageCodeProperties {
     private Integer width = 67;
     private Integer height = 23;
+    private Integer length = 4;
+    private Integer expired = 60;
+    private String URLs="";
 
 }

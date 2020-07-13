@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @create: 2020-07-12 13:11
  **/
 @Configuration
-@EnableConfigurationProperties(SecurityProperties.class)
+@EnableConfigurationProperties(ValidateCodeProperties.class)
 public class ProjectProperties {
 
 }
