@@ -1,5 +1,6 @@
-package com.example.security.configurations;
+package com.example.security.properties;
 
+import com.example.security.properties.validations.ValidateCodeProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

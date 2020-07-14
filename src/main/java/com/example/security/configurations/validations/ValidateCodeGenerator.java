@@ -1,6 +1,5 @@
-package com.example.security.configurations;
+package com.example.security.configurations.validations;
 
-import com.example.security.POJO.ImageCode;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
@@ -10,5 +9,5 @@ import org.springframework.web.context.request.ServletWebRequest;
  * @create: 2020-07-14 03:14
  **/
 public interface ValidateCodeGenerator {
-    ImageCode generate(ServletWebRequest request);
+    ValidationCode generate(ServletWebRequest request);
 }

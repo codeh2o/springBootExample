@@ -1,4 +1,4 @@
-package com.example.security.POJO;
+package com.example.security.configurations.validations;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,21 +14,20 @@ import java.time.LocalDateTime;
  **/
 @Getter
 @Setter
-public class ImageCode {
-    private BufferedImage image;
+public class ValidationCode {
 
     private String code;
 
     private LocalDateTime expireTime;
 
-    public ImageCode(BufferedImage image, String code, int expireIn){
-        this.image = image;
+    public ValidationCode(String code, int expireIn) {
+
         this.code = code;
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
 
-    public ImageCode(BufferedImage image, String code, LocalDateTime expireTime){
-        this.image = image;
+    public ValidationCode(String code, LocalDateTime expireTime) {
+
         this.code = code;
         this.expireTime = expireTime;
     }

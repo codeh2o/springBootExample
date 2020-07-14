@@ -1,8 +1,7 @@
-package com.example.security.configurations;
+package com.example.security.properties.validations;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @program: security

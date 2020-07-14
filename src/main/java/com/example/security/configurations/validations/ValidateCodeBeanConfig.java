@@ -1,6 +1,8 @@
-package com.example.security.configurations;
+package com.example.security.configurations.validations;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import com.example.security.configurations.validations.image.ImageValidateCodeGenerator;
+import com.example.security.service.DefaultSMSCodeSender;
+import com.example.security.service.SMSCodeSender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +21,11 @@ public class ValidateCodeBeanConfig {
     public ValidateCodeGenerator imageCodeGenerator() {
         ImageValidateCodeGenerator imageValidateCodeGenerator = new ImageValidateCodeGenerator();
         return imageValidateCodeGenerator;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(name = "defaultSMSCodeSender")
+    public SMSCodeSender defaultSMSCodeSender() {
+       return  new DefaultSMSCodeSender();
     }
 }

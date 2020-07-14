@@ -3,6 +3,7 @@ package com.example.security.configurations;
 import com.example.security.filter.ValidateCodeFilter;
 import com.example.security.handler.AuthFailureHandler;
 import com.example.security.handler.AuthSuccessHandler;
+import com.example.security.properties.validations.ValidateCodeProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(rememberMeSeconds)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/login", "/login.html", "/code/image", "/authentication/form", "/info2").permitAll()
+                .antMatchers("/authentication/login", "/login.html", "/loginWithSMS.html", "/code/image", "/code/sms", "/authentication/form", "/info2").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

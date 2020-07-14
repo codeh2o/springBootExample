@@ -1,6 +1,7 @@
-package com.example.security.configurations;
+package com.example.security.configurations.validations.image;
 
-import com.example.security.POJO.ImageCode;
+import com.example.security.configurations.validations.ValidateCodeGenerator;
+import com.example.security.properties.validations.ValidateCodeProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -15,7 +16,7 @@ import java.util.Random;
  * @author: h2o
  * @create: 2020-07-14 03:16
  **/
-public class ImageValidateCodeGenerator implements  ValidateCodeGenerator {
+public class ImageValidateCodeGenerator implements ValidateCodeGenerator {
 
     @Autowired
     private ValidateCodeProperties validateCodeProperties;
