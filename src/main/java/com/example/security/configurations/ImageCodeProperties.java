@@ -17,6 +17,6 @@ public class ImageCodeProperties {
     private Integer height = 23;
     private Integer length = 4;
     private Integer expired = 60;
-    private String URLs="";
+
 
 }

@@ -2,7 +2,6 @@ package com.example.security.filter;
 
 import com.example.security.POJO.ImageCode;
 import com.example.security.ValidateCodeException;
-import com.example.security.configurations.ValidateCodeGenerator;
 import com.example.security.configurations.ValidateCodeProperties;
 import com.example.security.controller.ValidateCodeController;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
@@ -38,7 +36,7 @@ import java.util.Set;
 @Setter
 @Slf4j
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
-    @Autowired
+
     private ValidateCodeProperties validateCodeProperties;
 
     private AuthenticationFailureHandler authenticationFailureHandler;
@@ -52,8 +50,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        String urlas = validateCodeProperties.getImage().getURLs();
-        String[] configURLs = StringUtils.splitByWholeSeparatorPreserveAllTokens(urlas,",");
+
+        String[] configURLs = StringUtils.splitByWholeSeparatorPreserveAllTokens(validateCodeProperties.getURIs(),",");
         for (String configURL:configURLs
              ) {
             urls.add(configURL);
@@ -64,6 +62,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         boolean action = false;
         for (String url : urls) {
             if(pathMatcher.match(url, request.getRequestURI())){

@@ -46,8 +46,8 @@ public class UserController {
      * @Date: 2020/7/8 1:05
      */
     @GetMapping("/info2")
-    public Object info2(@AuthenticationPrincipal UserDetails userDetails) {
-        return userDetails;
+    public Object info2() {
+        return "hello";
     }
 
 

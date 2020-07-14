@@ -21,6 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Autowired
+    private ValidateCodeProperties validateCodeProperties;
+
+    @Autowired
     private AuthSuccessHandler authSuccessHandler;
 
     @Autowired
@@ -37,7 +40,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity HttpSecurity) throws Exception {
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(authFailureHandler);
-
+        validateCodeFilter.setValidateCodeProperties(validateCodeProperties);
         validateCodeFilter.afterPropertiesSet();
 
         HttpSecurity.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
@@ -48,7 +51,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authentication/form")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/login","/login.html","/code/image","/authentication/form").permitAll()
+                .antMatchers("/authentication/login","/login.html","/code/image","/authentication/form","/info2").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
