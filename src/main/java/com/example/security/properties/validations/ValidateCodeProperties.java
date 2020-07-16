@@ -17,5 +17,6 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 public class ValidateCodeProperties {
     private ImageCodeProperties image = new ImageCodeProperties();
+    private SmsCodeProperties sms = new SmsCodeProperties();
     private String URIs="";
 }

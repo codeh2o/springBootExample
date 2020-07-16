@@ -3,6 +3,7 @@ package com.example.security.configurations;
 import com.example.security.filter.ValidateCodeFilter;
 import com.example.security.handler.AuthFailureHandler;
 import com.example.security.handler.AuthSuccessHandler;
+import com.example.security.mobile.SmsAuthenticationFilter;
 import com.example.security.properties.validations.ValidateCodeProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -68,7 +69,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         validateCodeFilter.setValidateCodeProperties(validateCodeProperties);
         validateCodeFilter.afterPropertiesSet();
 
-        HttpSecurity.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+
+        SmsAuthenticationFilter smsAuthenticationFilter = new SmsAuthenticationFilter();
+        smsAuthenticationFilter.setAuthenticationFailureHandler(authFailureHandler);
+        smsAuthenticationFilter.afterPropertiesSet();
+
+        HttpSecurity.addFilterBefore(smsAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)

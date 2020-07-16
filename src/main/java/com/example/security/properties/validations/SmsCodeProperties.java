@@ -11,11 +11,11 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class ImageCodeProperties {
-    private Integer width = 67;
-    private Integer height = 23;
+public class SmsCodeProperties {
+
     private Integer length = 4;
     private Integer expired = 60;
-    private String[] URLs;
+    private String URLs;
+
 
 }
