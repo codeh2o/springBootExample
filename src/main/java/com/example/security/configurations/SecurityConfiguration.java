@@ -1,9 +1,11 @@
 package com.example.security.configurations;
 
 import com.example.security.filter.ValidateCodeFilter;
+import com.example.security.filter.ValidateSMSCodeFilter;
 import com.example.security.handler.AuthFailureHandler;
 import com.example.security.handler.AuthSuccessHandler;
 import com.example.security.mobile.SmsAuthenticationFilter;
+import com.example.security.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.example.security.properties.validations.ValidateCodeProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +33,9 @@ import javax.sql.DataSource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${rememberMeSeconds}")
     private int rememberMeSeconds;
+
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
     @Autowired
     private ValidateCodeProperties validateCodeProperties;
@@ -70,12 +75,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         validateCodeFilter.afterPropertiesSet();
 
 
-        SmsAuthenticationFilter smsAuthenticationFilter = new SmsAuthenticationFilter();
-        smsAuthenticationFilter.setAuthenticationFailureHandler(authFailureHandler);
-        smsAuthenticationFilter.afterPropertiesSet();
+        ValidateSMSCodeFilter validateSMSCodeFilter = new ValidateSMSCodeFilter();
+        validateSMSCodeFilter.setAuthenticationFailureHandler(authFailureHandler);
+        validateSMSCodeFilter.setValidateCodeProperties(validateCodeProperties);
+        validateSMSCodeFilter.afterPropertiesSet();
 
-        HttpSecurity.addFilterBefore(smsAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        HttpSecurity.addFilterBefore(validateSMSCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)
@@ -91,7 +97,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .apply(smsCodeAuthenticationSecurityConfig);
     }
 
 }
