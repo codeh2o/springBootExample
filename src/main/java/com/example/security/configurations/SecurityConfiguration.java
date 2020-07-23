@@ -4,7 +4,6 @@ import com.example.security.filter.ValidateCodeFilter;
 import com.example.security.filter.ValidateSMSCodeFilter;
 import com.example.security.handler.AuthFailureHandler;
 import com.example.security.handler.AuthSuccessHandler;
-import com.example.security.mobile.SmsAuthenticationFilter;
 import com.example.security.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.example.security.properties.validations.ValidateCodeProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
@@ -61,6 +61,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return tokenRepository;
     }
 
+    @Autowired
+    private SpringSocialConfigurer exampleSocialSecurityConfig;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -80,8 +83,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         validateSMSCodeFilter.setValidateCodeProperties(validateCodeProperties);
         validateSMSCodeFilter.afterPropertiesSet();
 
-        HttpSecurity.addFilterBefore(validateSMSCodeFilter, UsernamePasswordAuthenticationFilter.class)
-        .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        HttpSecurity.apply(exampleSocialSecurityConfig)
+                .and()
+                .addFilterBefore(validateSMSCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .successHandler(authSuccessHandler)
                 .failureHandler(authFailureHandler)
@@ -93,7 +98,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(rememberMeSeconds)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/login", "/login.html", "/loginWithSMS.html", "/code/image", "/code/sms", "/authentication/form", "/info2").permitAll()
+                .antMatchers("/authentication/login", "/login.html", "/loginWithSMS.html", "/code/image", "/auth/*", "/code/sms", "/authentication/form", "/info2").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

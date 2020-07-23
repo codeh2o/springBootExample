@@ -1,9 +1,8 @@
-package com.example.security.social.qq.api.connect;
+package com.example.security.social.qq.connect;
 
 import com.example.security.social.qq.api.QQ;
 import com.example.security.social.qq.api.QQimpl;
 import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
-import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Template;
 
 /**

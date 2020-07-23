@@ -1,4 +1,4 @@
-package com.example.security.social.qq.api.connect;
+package com.example.security.social.qq.connect;
 
 import com.example.security.social.qq.api.QQ;
 import com.example.security.social.qq.api.QQUserInfo;
